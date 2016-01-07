@@ -1,0 +1,3 @@
+sudo apt-get install nfs-kernel-server portmap
+sudo modprobe nfs
+sudo modprobe nfsd
