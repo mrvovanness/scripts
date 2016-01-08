@@ -1,0 +1,9 @@
+# Nodejs
+deb https://deb.nodesource.com/node_4.x jessie main
+deb-src https://deb.nodesource.com/node_4.x jessie main
+
+# Opera
+deb https://deb.opera.com/opera-stable/ stable non-free
+
+# Virtual Box
+deb http://download.virtualbox.org/virtualbox/debian jessie contrib
