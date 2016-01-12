@@ -151,7 +151,7 @@ fi
 
 #Terminal
 if ! grep +tilda $progress_file; then
-  install 'Tilda' tilda
+  install 'Tilda tmux' tilda tmux
   exec_cmd "echo +tilda >> $progress_file"
 fi
 
