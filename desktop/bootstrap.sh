@@ -81,6 +81,7 @@ if [ ! -d /opt/firefox ]; then
   archive_url='https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'
   archive_name=firefox.tar.bz2
 
+  install 'flash support' flashplugin-nonfree
   exec_cmd "wget -O $archive_name '$archive_url'
             mkdir /opt
             mv $archive_name /opt/
@@ -145,6 +146,20 @@ if ! grep +sublime-text $progress_file; then
             dpkg -i sublime.deb
             rm sublime.deb
             echo +sublime-text >> $progress_file"
+fi
+
+# Upwork Team App
+if ! grep +upwork_team_app $progress_file; then
+  libgcrypt_url=http://ftp.acc.umu.se/mirror/cdimage/snapshot/Debian/pool/main/libg/libgcrypt11/libgcrypt11_1.5.3-5_amd64.deb
+  upwork_url=http://updates.team.odesk.com/binaries/v4_0_109_0_5dd4be27f24afbda38b590/upwork_amd64.deb
+  exec_cmd "wget -O libgcrypt.deb $libgcrypt_url
+            dpkg -i libgcrypt.deb
+            rm      libgcrypt.deb
+            wget -O upworkteam.deb $upwork_url
+            dpkg -i upworkteam.deb
+            rm upworkteam.deb
+            apt-get install -f
+            echo +upwork_team_app >> $progress_file"
 fi
 
 ###### Development Env
@@ -225,9 +240,15 @@ if ! grep +chef $progress_file; then
             echo +chef >> $progress_file"
 fi
 
+#libs for compiling ruby
+if ! grep +ruby-libs $progress_file; then
+  install 'ruby libs' libreadline-dev
+  exec_cmd "echo +ruby-libs >> $progress_file"
+fi
+
 ###### Desktop Usefull Programs
 if ! grep +goodies $progress_file; then
-  install "Desktop Usefull programs" keepassx clementine deluge fbreader
+  install "Desktop Usefull programs" keepassx clementine deluge fbreader shutter
   exec_cmd "echo +goodies >> $progress_file"
 fi
 
