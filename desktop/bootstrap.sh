@@ -246,6 +246,12 @@ if ! grep +ruby-libs $progress_file; then
   exec_cmd "echo +ruby-libs >> $progress_file"
 fi
 
+#heroku
+if ! grep +heroku $progress_file; then
+  exec_cmd "wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh"
+  exec_cmd "echo +heroku >> $progress_file"
+fi
+
 ###### Desktop Usefull Programs
 if ! grep +goodies $progress_file; then
   install "Desktop Usefull programs" keepassx clementine deluge fbreader shutter
