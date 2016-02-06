@@ -134,7 +134,7 @@ fi
 
 #vim
 if ! grep +vim $progress_file; then
-  install 'Vim' vim
+  install 'Vim' vim-gtk
   exec_cmd "echo +vim >> $progress_file"
 fi
 
@@ -254,7 +254,7 @@ fi
 
 ###### Desktop Usefull Programs
 if ! grep +goodies $progress_file; then
-  install "Desktop Usefull programs" keepassx clementine deluge fbreader shutter
+  install "Desktop Usefull programs" keepassx clementine deluge fbreader shutter zip upzip
   exec_cmd "echo +goodies >> $progress_file"
 fi
 
@@ -265,4 +265,15 @@ if ! grep +user-config $progress_file; then
   su - $user -c "cd ~/dotfiles/
                  git submodule update --init"
   exec_cmd "echo +user-config >> $progress_file"
+fi
+
+###### Fonts
+
+if ! grep +fonts $progress_file; then
+  install 'powerline fonts' fonts-powerline
+  wget -O ~/ubuntu_fonts http://font.ubuntu.com/download/ubuntu-font-family-0.83.zip
+  unzip ~/ubuntu_fonts -d ~/ubuntu_fonts_dir
+  cp ~/ubuntu_fonts_dir/**/*.ttf /usr/local/share/fonts/
+  chmod -R 777 /usr/local/share/fonts
+  exec_cmd "echo +fonts >> $progress_file"
 fi
