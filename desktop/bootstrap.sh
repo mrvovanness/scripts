@@ -140,8 +140,7 @@ fi
 
 #Sublime Text
 if ! grep +sublime-text $progress_file; then
-  sublime_url='http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb'
-
+  sublime_url='https://download.sublimetext.com/sublime-text_build-3103_amd64.deb'
   exec_cmd "wget -O sublime.deb '$sublime_url'
             dpkg -i sublime.deb
             rm sublime.deb
@@ -240,9 +239,9 @@ if ! grep +chef $progress_file; then
             echo +chef >> $progress_file"
 fi
 
-#libs for compiling ruby
+#libs for compiling ruby and gems
 if ! grep +ruby-libs $progress_file; then
-  install 'ruby libs' libreadline-dev
+  install 'ruby libs' libreadline-dev libxml2 libxml2-dev ruby-dev zlib1g-dev liblzma-dev libxslt-dev
   exec_cmd "echo +ruby-libs >> $progress_file"
 fi
 
@@ -276,4 +275,16 @@ if ! grep +fonts $progress_file; then
   cp ~/ubuntu_fonts_dir/**/*.ttf /usr/local/share/fonts/
   chmod -R 777 /usr/local/share/fonts
   exec_cmd "echo +fonts >> $progress_file"
+fi
+
+##### Ctags
+if ! grep +ctags $progress_file; then
+  apt-get install --force-yes exuberant-ctags
+  exec_cmd "echo +ctags >> $progress_file"
+fi
+
+##### Network hardware
+if ! grep +network $progress_file; then
+  install 'network firmware' firmware-realtek firmware-atheros pppoe
+  exec_cmd "echo +network >> $progress_file"
 fi
