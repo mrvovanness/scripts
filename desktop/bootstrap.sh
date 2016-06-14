@@ -140,7 +140,7 @@ fi
 
 #Sublime Text
 if ! grep +sublime-text $progress_file; then
-  sublime_url='https://download.sublimetext.com/sublime-text_build-3103_amd64.deb'
+  sublime_url='https://download.sublimetext.com/sublime-text_build-3114_amd64.deb'
   exec_cmd "wget -O sublime.deb '$sublime_url'
             dpkg -i sublime.deb
             rm sublime.deb
