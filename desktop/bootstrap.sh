@@ -193,12 +193,13 @@ fi
 
 #redis
 if ! grep +redis $progress_file; then
-  su - $user -c "wget -O ~/redis.tar.gz http://download.redis.io/releases/redis-3.0.3.tar.gz
+  redis_url=http://download.redis.io/releases/redis-3.2.0.tar.gz
+  su - $user -c "wget -O ~/redis.tar.gz $redis_url
                  tar xzfv ~/redis.tar.gz --directory ~/ &&
-                 cd ~/redis-3.0.3
+                 cd ~/redis-3.2.0
                  make
                  rm ~/redis.tar.gz"
-  exec_cmd "ln -sf /home/$user/redis-3.0.3/src/redis-server /usr/bin/redis
+  exec_cmd "ln -sf /home/$user/redis-3.2.0/src/redis-server /usr/bin/redis
             echo +redis >> $progress_file"
 fi
 
@@ -242,6 +243,7 @@ fi
 #libs for compiling ruby and gems
 if ! grep +ruby-libs $progress_file; then
   install 'ruby libs' libreadline-dev libxml2 libxml2-dev ruby-dev zlib1g-dev liblzma-dev libxslt-dev
+  install 'reccomended for ruby-build' autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
   exec_cmd "echo +ruby-libs >> $progress_file"
 fi
 
