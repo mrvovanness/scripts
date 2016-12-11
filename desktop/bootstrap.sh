@@ -140,7 +140,7 @@ fi
 
 #Sublime Text
 if ! grep +sublime-text $progress_file; then
-  sublime_url='https://download.sublimetext.com/sublime-text_build-3114_amd64.deb'
+  sublime_url='https://download.sublimetext.com/sublime-text_build-3126_amd64.deb'
   exec_cmd "wget -O sublime.deb '$sublime_url'
             dpkg -i sublime.deb
             rm sublime.deb
@@ -210,9 +210,19 @@ if ! grep +virtual-box $progress_file; then
   exec_cmd "echo +virtual-box >> $progress_file"
 fi
 
+#Docker
+if ! grep +docker $progress_file; then
+  echo 'deb https://apt.dockerproject.org/repo debian-jessie main' >> /etc/apt/sources.list.d/docker.list
+  apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+  apt-get update
+  install 'docker' docker-engine
+  exec_cmd "echo +docker >> $progress_file"
+fi
+
+
 #Vagrant
 if ! grep +vagrant $progress_file; then
-  vagrant_url=https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb
+  vagrant_url=https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_x86_64.deb
   exec_cmd "wget -O vagrant.deb $vagrant_url
             dpkg -i vagrant.deb
             rm vagrant.deb
