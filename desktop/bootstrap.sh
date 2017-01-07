@@ -229,6 +229,16 @@ if ! grep +vagrant $progress_file; then
             echo +vagrant >> $progress_file"
 fi
 
+#Nginx with openresty
+if ! grep +nginx $progress_file; then
+  apt-get install libreadline-dev libncurses5-dev libpcre3-dev
+  wget -O- https://openresty.org/download/openresty-1.11.2.2.tar.gz | tar zxvf - &&
+  cd openresty-1.11.2.2 && ./configure -j2 && make -j2 && make install &&
+  echo 'export PATH=$PATH:/usr/local/openresty-1.11.2.2/bin' >> /home/$user/.zshrc  &&
+  rm -fr openresty-1.11.2.2 &&
+  exec_cmd "echo +nginx >> $progress_file"
+fi
+
 #nfs support
 if ! grep +nfs_support $progress_file; then
   install 'nfs kernel server' nfs-kernel-server
@@ -265,7 +275,7 @@ fi
 
 ###### Desktop Usefull Programs
 if ! grep +goodies $progress_file; then
-  install "Desktop Usefull programs" keepassx clementine deluge fbreader shutter zip upzip
+  install "Desktop Usefull programs" keepassx clementine deluge fbreader shutter zip upzip jq
   exec_cmd "echo +goodies >> $progress_file"
 fi
 
